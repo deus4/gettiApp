@@ -43,7 +43,7 @@ Examples:
 - Gin Basil Smash Pre-Batch
 
 ### Characteristics
-- Has an author (User)
+- Has an author (User, not always operationally relevant)
 - Belongs to an ownership scope (who may use it)
 - Has multiple versions
 - Is NOT directly counted in inventory
@@ -145,7 +145,7 @@ Recipes follow the same ownership principles
 as Inventory Sessions.
 
 Supported scopes:
-- User (personal recipes)
+- User (personal drafts, future use)
 - Team
 - Organization
 
@@ -177,7 +177,8 @@ Example:
 ### Rules
 - Inventory references Recipe Versions
 - Breakdown uses frozen ingredient quantities
-- Breakdown results are stored as Inventory Snapshots
+- Breakdown results are stored as Inventory Items
+  with Snapshot-backed product and recipe data
 - Product changes never rewrite historical usage
 
 ---
