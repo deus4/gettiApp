@@ -242,10 +242,15 @@ Async workers (sync, moderation, exports)
 
 ### 5.3 Планируемый стек
 
-**Backend**
-- Python (FastAPI или Django)
-- REST API
-- фоновые задачи (Celery / RQ)
+### Backend (целевая архитектура)
+
+- **Node.js (TypeScript)** — основной backend API
+- **PostgreSQL** — основной источник истины (source of truth)
+- **Асинхронные воркеры** — синхронизация, модерация, экспорт данных
+
+### Опционально / будущие этапы
+
+- **Python-сервисы** — аналитика, машинное обучение, обработка данных
 
 **База данных**
 - PostgreSQL
