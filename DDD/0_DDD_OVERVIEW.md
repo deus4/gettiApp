@@ -63,11 +63,11 @@ and corporate clients.
 ### CORE DOMAINS
 
 These domains deliver
-the primary business value.
-├── Products
-├── Inventory
-├── Recipes
-├── Users / Teams / Organizations
+the primary business value.  
+├── Products  
+├── Inventory  
+├── Recipes  
+├── Users / Teams / Organizations  
 └── Procurement
 
 ---
@@ -75,10 +75,10 @@ the primary business value.
 ### SUPPORTING DOMAINS
 
 These domains are not directly monetized,
-but are critical for scale and quality.
-├── Moderation
-├── Analytics
-├── POS Integrations
+but are critical for scale and quality.  
+├── Moderation  
+├── Analytics  
+├── POS Integrations  
 └── Notifications
 
 ---
@@ -86,10 +86,10 @@ but are critical for scale and quality.
 ### APPLICATION / FUTURE LAYERS
 
 These layers do **not participate in AS-IS operations**,
-but are built on top of existing domains.
-├── Creator Economy
-├── Marketplace
-├── NFT / Licensing
+but are built on top of existing domains.  
+├── Creator Economy  
+├── Marketplace  
+├── NFT / Licensing  
 └── Payments & Billing
 
 ---
