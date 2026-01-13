@@ -63,22 +63,23 @@ Domain-Driven Design (DDD) в системе.
 ### CORE DOMAINS (ядро продукта)
 
 Эти домены формируют основную
-бизнес-ценность системы.
-├── Products
-├── Inventory
-├── Recipes
-├── Users / Teams / Organizations
-└── Procurement (заказы)
+бизнес-ценность системы.  
+
+├── Products  
+├── Inventory  
+├── Recipes  
+├── Users / Teams / Organizations  
+ └── Procurement (заказы)
 
 ---
 
 ### SUPPORTING DOMAINS (поддерживающие)
 
 Эти домены не продаются напрямую,
-но критичны для масштабирования и качества.
-├── Moderation
-├── Analytics
-├── POS Integrations* (в некоторых случаях могут быть платными)
+но критичны для масштабирования и качества.  
+├── Moderation  
+├── Analytics  
+├── POS Integrations* (в некоторых случаях могут быть платными)  
 └── Notifications
 
 ---
@@ -86,10 +87,10 @@ Domain-Driven Design (DDD) в системе.
 ### APPLICATION / FUTURE LAYERS
 
 Эти слои **не участвуют в AS-IS операционке**,
-но строятся поверх существующих доменов.
-├── Creator Economy
-├── Marketplace
-├── NFT / Licensing
+но строятся поверх существующих доменов.  
+├── Creator Economy  
+├── Marketplace  
+├── NFT / Licensing  
 └── Payments & Billing
 
 ---
