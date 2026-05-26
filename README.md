@@ -1,5 +1,5 @@
 # GETTI
-_(formerly poirot.systems)_
+*(formerly poirot.systems)*
 
 ## System Overview & Developer Introduction
 ### Current State → Target Architecture
@@ -15,7 +15,7 @@ The system solves real operational problems:
 - fast and accurate inventory counting,
 - reduction of human errors,
 - offline-first operation on site,
-- centralized product catalog,
+- centralised product catalogue,
 - POS integrations.
 
 The product was originally built **Firebase-first**
@@ -51,7 +51,7 @@ Getti internal staff only.
 
 **Responsibilities:**
 - moderating new products,
-- maintaining the global catalog,
+- maintaining the global catalogue,
 - fixing data issues,
 - duplicate prevention.
 
@@ -100,9 +100,9 @@ Firebase stores:
 - legacy functionality.
 
 A lot of logic relies on:
-- realtime listeners,
+- real-time listeners,
 - implicit side effects,
-- automatic synchronization.
+- automatic synchronisation.
 
 ---
 
@@ -114,7 +114,7 @@ Responsibilities:
 - authentication,
 - team management,
 - product management,
-- inventory finalization,
+- inventory finalisation,
 - PDF / XLSX exports.
 
 Technically:
@@ -142,130 +142,104 @@ Offline-first is a **core feature** and must be preserved.
 Stack: MySQL
 
 Used for:
-- partial normalization,
+- partial normalisation,
 - global reference data.
 
 SQL is **not the source of truth**.
 
 ---
 
-## 3. Core Domain Concepts
+## 3. Domain‑Driven Design (DDD)
 
-### 3.1 Products
+The architecture is defined through **Domain‑Driven Design**.
+Each domain has its own specification in the [`DDD/`](./DDD) folder.
 
-**Global Product Catalog (GPC):**
-- alcohol,
-- non-alcoholic beverages,
-- tobacco,
-- moderated,
-- shared across teams.
+### Core domains
 
-**Local products:**
-- team-specific,
-- recipes and pre-batches,
-- miscellaneous items,
-- not moderated.
+| Domain               | Description                                                                 |
+| -------------------- | --------------------------------------------------------------------------- |
+| **Products**         | Global product catalogue, local products, moderation, categories & attributes |
+| **Inventory**        | Stock‑taking sessions, offline‑first, weight‑based counting, snapshots      |
+| **Recipes**          | Structured recipes, versioning, breakdown into product variants             |
+| **Users & Teams**    | Authentication, roles, memberships, invitations                             |
+| **Procurement**      | Supplier management, ordering, negotiation (revisions), email‑first         |
+| **Notifications**    | Push/email delivery, retry logic, token‑based actions for suppliers       |
+| **Platform (Internal)** | Moderation tools, global catalogue management, internal roles (Diabolics)  |
 
----
-
-### 3.2 Recipes (Pre-batches)
-
-- recipes are structured ingredient lists,
-- used in inventory,
-- automatically broken down into components.
+**Key architectural document:** [`DDD/00_core_ownership.md`](./DDD/00_core_ownership.md)
+– defines the ownership & identity layer used by all domains.
 
 ---
 
-### 3.3 Inventories
+## 4. Target Architecture (To‑Be)
 
-Inventory is tied to:
-- team,
-- location,
-- time.
-
-Includes:
-- weighted items,
-- unit-counted items,
-- recipes.
-
----
-
-## 4. Product Moderation Logic
-
-### Scenario A — new product
-1. User creates a product.
-2. If not marked as `Other`, it goes to moderation.
-3. Moderator:
-   - **accepts** → adds to GPC,
-   - **assigns** → links to existing product,
-   - **ignores** → product stays local.
-
----
-
-### Scenario B — editing a global product
-1. User edits a GPC product.
-2. A local override is created.
-3. Changes go to moderation.
-4. Moderator decides how to resolve.
-
----
-
-## 5. Target Architecture (To-Be)
-
-### 5.1 Key Shift
+### 4.1 Key Shift
 
 ❌ Firebase as system brain  
-✅ Backend + SQL as source of truth
+✅ **Backend + PostgreSQL as source of truth**
 
 Firebase temporarily remains for:
-- authentication,
-- push notifications,
+- authentication (until migrated),
+- push notifications (FCM),
 - backward compatibility.
 
 ---
 
-### 5.2 Target Architecture
+### 4.2 Target Architecture
+
 Mobile / Web
 ↓
-Backend API
+Backend API (Node.js)
 ↓
-PostgreSQL
+PostgreSQL (source of truth)
 ↓
 Async workers (sync, moderation, exports)
 
-Mobile app:
-- remains offline-first,
+
+**Mobile app:**
+- remains offline‑first,
 - syncs via explicit APIs,
 - does not rely on Firebase listeners.
 
 ---
 
-### 5.3 Planned Stack
+### 4.3 Planned Stack
 
-Backend (Target):
-- Node.js (TypeScript) — primary backend API
-- PostgreSQL — source of truth
-- Async workers for sync, moderation, exports
+| Component          | Technology                                          |
+| ------------------ | --------------------------------------------------- |
+| Backend            | Node.js (JavaScript, strict mode, no TypeScript)    |
+| Database           | PostgreSQL (explicit schema, migrations)            |
+| Async workers      | Node.js (bull or similar)                           |
+| Infrastructure     | Zone.ee                                             |
+| Backups            | 3 months retention                                 |
 
-Optional / Future:
-- Python services for analytics or ML workloads
+**No TypeScript** – we use disciplined JavaScript with `"use strict"` and explicit contracts.
 
-**Database**
-- PostgreSQL
-- explicit schema
-- migrations
+---
 
-**Infrastructure**
-- Zone.ee
-- backups (3 months retention)
+## 5. Business Processes & Roadmap
+
+- **Business processes** (inventory, procurement, moderation, invitations, recipes) are described in [`BUSINESS_PROCESSES.md`](./BUSINESS_PROCESSES.md).
+- **Development roadmap** is available in [`ROADMAP.md`](./ROADMAP.md).
 
 ---
 
 ## 6. How to Read Project Documentation
 
-- `README.md` — system overview
-- `*/DDD_OVERVIEW.md` — domain map
-- `*/...Domain.md` — domain specifications
+1. `README.md` – this file, system overview.
+2. [`DDD/00_core_ownership.md`](./DDD/00_core_ownership.md) – fundamental ownership & identity rules.
+3. Domain files in [`DDD/`](./DDD) (e.g., `1_productsDomain.md`, `2_inventoryDomain.md`, etc.).
+4. [`BUSINESS_PROCESSES.md`](./BUSINESS_PROCESSES.md) – end‑to‑end workflows.
+5. [`ROADMAP.md`](./ROADMAP.md) – milestones and timeline.
 
-When changing business logic,
-update domain documents first.
+**When changing business logic, update the relevant domain document first.**
+
+---
+
+## 7. Developer Notes
+
+- **Never extend Firebase legacy logic** – new features go into the new backend.
+- **Preserve offline‑first** – the mobile app must work without internet.
+- **Respect domain boundaries** – do not leak logic across domains.
+- **Ownership rules** (see `00_core_ownership.md`) are mandatory for all domains.
+- **When in doubt, ask** – the documentation is a living artifact.
