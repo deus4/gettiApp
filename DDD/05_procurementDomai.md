@@ -5,7 +5,7 @@
 The Procurement Domain defines:
 - how goods are ordered from suppliers
 - how supplier relationships are managed
-- how procurement workflows integrate with inventory
+- How procurement workflows integrate with inventory
 
 Its goals:
 - fast ordering based on inventory data
@@ -38,7 +38,7 @@ Inventory remains the primary paid feature.
 
 ### Definition
 
-A Supplier is an external entity that provides goods to a Team or Organization.  
+A Supplier is an external entity that provides goods to a Team or Organisation.  
 Suppliers are **never system users** – no registration, no login.
 
 **Examples:** alcohol distributor, beverage wholesaler, tobacco supplier, local food vendor.
@@ -67,7 +67,7 @@ Suppliers are **never system users** – no registration, no login.
 
 ### Definition
 
-An operational link between a Team/Organization and a Supplier, required before orders can be sent.
+An operational link between a Team/Organisation and a Supplier is required before orders can be sent.
 
 ### Pairing Flow
 1. User creates a Supplier (status `inactive`).
@@ -91,9 +91,9 @@ inactive → pending → accepted
 | `rejected` | ❌ No           |
 
 ### Cooldown after `rejected`
-- User may re‑send pairing request only after **24 hours**.
+- User may resend the pairing request only after **24 hours**.
 - Logic: `last_rejected_at < NOW() - INTERVAL '24h'`.
-- Rationale: supplier may have clicked Reject by accident; 24h is sufficient cooldown.
+- Rationale: The supplier may have clicked Reject by accident; 24h is sufficient cooldown.
 
 ---
 
@@ -113,7 +113,7 @@ draft → submitted → in_negotiation → agreed → completed
 |-------------------|-------------------------------------------------------------------|
 | `draft`           | User created, not yet sent. Editable.                             |
 | `submitted`       | Sent to supplier. First revision (v1) created. Immutable.         |
-| `in_negotiation`  | Supplier proposed changes (new revision) or user rejected a proposal. |
+| `in_negotiation`  | Supplier proposed changes (new revision) or the user rejected a proposal. |
 | `agreed`          | Both parties accepted a revision. Order frozen.                   |
 | `completed`       | User manually marks as completed after physical delivery.         |
 | `cancelled`       | Cancelled before `agreed`.                                        |
@@ -139,7 +139,7 @@ draft → submitted → in_negotiation → agreed → completed
 In real negotiations, order contents change:
 - supplier may offer different quantities (“only 50 instead of 100”)
 - supplier may propose a substitute product (“no brand X, but brand Y at discount”)
-- user must accept or counter‑propose.
+- The user must accept or counter‑propose.
 
 ### Solution: Append‑only revisions
 Every change to the order items creates a **new revision**. Old revisions are never deleted. Full negotiation history is preserved.
@@ -197,7 +197,7 @@ One item within a specific revision.
 ## 5. Order Messages (Text Chat)
 
 ### Definition
-Text exchange between user and supplier within an order. Does not change order items – only comments.
+Text exchange between the user and supplier within an order. Does not change order items – only comments.
 
 ### Characteristics
 - Belongs to an order.
@@ -255,12 +255,12 @@ One‑time signed tokens embedded in email links, allowing suppliers to perform 
 1. **Inventory session finished** → system identifies low stock (or user starts manually).
 2. User creates **Procurement Order** (`draft`). `source_session_id` may be set.
 3. User adds items (via Product Variants). First revision (v1) created implicitly.
-4. User submits order → status `submitted`. Email sent to supplier with token links to view order.
+4. User submits order → status `submitted`. Email sent to the supplier with token links to view the order.
 5. Supplier reviews. May:
    - Accept order as‑is → order `agreed` (no negotiation needed).
    - Propose changes → creates new revision, order → `in_negotiation`. User notified.
-6. User may accept or reject the proposal. If rejected, supplier may propose another revision.
-7. Once a revision is accepted → order status `agreed`. No further changes.
+6. The user may accept or reject the proposal. If rejected, the supplier may propose another revision.
+7. Once a revision is accepted → order status is `agreed`. No further changes.
 8. Physical delivery happens outside the system.
 9. User marks order `completed`.
 
