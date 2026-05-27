@@ -43,7 +43,7 @@ MVP = a closed operational loop:
 - Products Domain (EN)
 - Inventory Domain (EN)
 - Recipes Domain (EN)
-- Users / Teams / Organizations Domain (EN)
+- Users / Teams / Organisations Domain (EN)
 - Procurement Domain (EN)
 - Business Processes AS‑IS → TO‑BE (EN)
 - `00_core_ownership.md` (ownership & identity layer)
@@ -69,11 +69,11 @@ MVP = a closed operational loop:
 
 **Time:** 6–8 weeks
 
-### 1.2 Users / Teams / Organizations
+### 1.2 Users / Teams / Organisations
 
 **Tasks:**
 - User
-- Organization (flat, no hierarchy)
+- Organisation (flat, no hierarchy)
 - Team
 - Membership & Roles
 - Ownership resolution
@@ -96,7 +96,7 @@ MVP = a closed operational loop:
 ### 1.4 Backend Re‑platforming (migration from Firebase)
 
 **Tasks:**
-- Move away from Firebase as source of truth
+- Move away from Firebase as a source of truth
 - New Node.js API + PostgreSQL schema
 - **Data migration script with verification** (count parity between Firebase and PostgreSQL)
 - Keep Firebase temporarily for auth/push (to be replaced later)
@@ -127,7 +127,7 @@ MVP = a closed operational loop:
 **Checkpoint after Phase 1:**  
 - No Firebase writes in new code (reads allowed temporarily)
 - Inventory session can be started, saved, finished, and exported to PDF
-- Snapshot test: product weight changed in catalog → old sessions still show original weight
+- Snapshot test: product weight changed in catalogue → old sessions still show original weight
 
 ---
 
@@ -141,7 +141,7 @@ MVP = a closed operational loop:
 - Recipe (abstract)
 - Recipe Version (immutable, auto‑increment)
 - Ingredients (Product Variant only)
-- Ownership & visibility (Team / Organization / User)
+- Ownership & visibility (Team / Organisation / User)
 
 **Time:** ~2 weeks
 
@@ -282,7 +282,7 @@ MVP = a closed operational loop:
 **After Phase 1:**
 - [ ] No Firebase writes in new code (reads allowed temporarily)
 - [ ] Inventory session can be started, saved, finished, and exported to PDF
-- [ ] Snapshot test: product weight changed in catalog → old sessions still show original weight
+- [ ] Snapshot test: product weight changed in catalogue → old sessions still show original weight
 
 **After Phase 2:**
 - [ ] At least 3 real bar recipes entered and counted in inventory
