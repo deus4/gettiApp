@@ -1,0 +1,115 @@
+# Domain‑Driven Design Overview
+
+## Document Purpose
+
+This document provides a high‑level map of the system’s domain architecture.  
+It is intended for developers, architects, and business stakeholders to understand quickly:
+
+- Which domains exist
+- what each domain is responsible for
+- the key principles that govern the system
+
+Detailed behaviour is defined in the individual domain specification files.  
+Core ownership and identity rules are defined in [`00_core_ownership.md`](./00_core_ownership.md).
+
+---
+
+## Core DDD Principles
+
+### 1. Inventory Is the Source of Truth
+- All quantitative data originates from the Inventory domain.
+- Inventory history is immutable – corrections create new states, never rewrite the past.
+
+### 2. Users Act, Entities Own
+- Users are **actors** who perform actions.
+- Operational data belongs to **Teams** or **Organizations**, never to individual users.
+
+### 3. AS‑IS and TO‑BE Do Not Mix
+- Current specifications reflect what is implemented or immediately planned.
+- Future strategic features (NFT, delivery merchant apps, AI agents) are documented separately.
+- Future layers must not distort current architectural decisions.
+
+### 4. History Is Immutable
+- Snapshots freeze product and recipe attributes at the time of use.
+- Historical reports never change, even if the catalogue data is updated later.
+
+---
+
+## Domain Landscape
+
+### Core Domains (Primary Business Value)
+
+| Domain                     | Responsibility                                                                 | Key Document                              |
+|----------------------------|--------------------------------------------------------------------------------|-------------------------------------------|
+| **Products**               | Product catalog (global + local), categories, attributes, moderation           | [`1_productsDomain.md`](./1_productsDomain.md) |
+| **Inventory**              | Stock‑taking sessions, offline‑first, snapshots, difference calculation        | [`2_inventoryDomain.md`](./2_inventoryDomain.md) |
+| **Recipes**                | Recipe structure, versioning, breakdown into product variants (planned)        | [`3_recipesDomain.md`](./3_recipesDomain.md) |
+| **Users, Teams & Orgs**    | Users, teams, organisations, memberships, roles, invitations                   | [`4_usersTeamsOrgDomain.md`](./4_usersTeamsOrgDomain.md) |
+| **Procurement**            | Suppliers, orders, negotiation (revisions), email‑first communication          | [`5_procurementDomain.md`](./5_procurementDomain.md) |
+
+### Supporting Domains (Enable Scale & Quality)
+
+| Domain                     | Responsibility                                                                 | Key Document                              |
+|----------------------------|--------------------------------------------------------------------------------|-------------------------------------------|
+| **Notifications**          | Push/email delivery, retry logic, token‑based supplier actions                 | [`6_notificationsDomain.md`](./6_notificationsDomain.md) |
+| **Platform (Diabolics)**   | Internal moderation tools, global catalog management, audit logs               | [`7_platformInternalRolesDomain.md`](./7_platformInternalRolesDomain.md) |
+
+---
+
+## Cross‑Cutting Concepts
+
+### Ownership (See `00_core_ownership.md`)
+- Every operational entity has exactly one owner (Team or Organisation).
+- Ownership is **immutable** after creation.
+- Inventory uses a direct `team_id` foreign key; other domains use polymorphic `(owner_type, owner_id)`.
+
+### Moderation
+- All new products (except category `Other`) enter a moderation queue.
+- Only internal Getti staff (Platform Domain) can moderate.
+- Moderation affects **visibility**, never rewrites inventory history.
+
+### Snapshots
+- Product attributes (weight, volume) are frozen at the time of inventory counting.
+- Recipe ingredients are frozen at the time of breakdown.
+- Snapshots are stored directly in the inventory item row.
+
+---
+
+## Architectural Invariants
+
+> Inventory counts Product Variants – never Product Labels or Recipes directly.  
+> History is immutable – once a session is finished, data never changes.  
+> Users act; Teams/Organisations own.  
+> AS‑IS over TO‑BE – current operations are never blocked by future aspirations.  
+> Monetisation must not break operational integrity.
+
+---
+
+## Document Structure
+
+| File                                 | Purpose                                                                 |
+|--------------------------------------|-------------------------------------------------------------------------|
+| `README.md`                          | System overview, stack, how to read documentation                      |
+| `BUSINESS_PROCESSES.md`              | End‑to‑end workflows (onboarding, inventory, procurement, moderation)  |
+| `ROADMAP.md`                         | Development phases, milestones, risk mitigation                        |
+| `00_core_ownership.md`               | Foundation: users, teams, organisations, ownership rules               |
+| `0_DDD_OVERVIEW.md` (this file)      | High‑level domain map and principles                                   |
+| `1_productsDomain.md`                | Products domain specification                                          |
+| `2_inventoryDomain.md`               | Inventory domain specification                                         |
+| `3_recipesDomain.md`                 | Recipes domain specification                                           |
+| `4_usersTeamsOrgDomain.md`           | Users, Teams, Organizations domain specification                       |
+| `5_procurementDomain.md`             | Procurement domain specification                                       |
+| `6_notificationsDomain.md`           | Notifications domain specification                                     |
+| `7_platformInternalRolesDomain.md`   | Platform (internal) domain specification                               |
+
+---
+
+## How to Use This Document
+
+- Start here to understand the domain landscape.
+- Refer to `00_core_ownership.md` for ownership and identity rules.
+- Dive into individual domain files for detailed entities, fields, and lifecycle rules.
+- Use `BUSINESS_PROCESSES.md` to see how domains interact in real workflows.
+- Consult `ROADMAP.md` for implementation priorities.
+
+**When changing business logic, update the relevant domain document first.**
