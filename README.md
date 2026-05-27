@@ -15,7 +15,7 @@ The system solves real operational problems:
 - fast and accurate inventory counting,
 - reduction of human errors,
 - offline-first operation on site,
-- centralized product catalog,
+- centralised product catalogue,
 - POS integrations.
 
 The product was originally built **Firebase-first**
@@ -51,7 +51,7 @@ Getti internal staff only.
 
 **Responsibilities:**
 - moderating new products,
-- maintaining the global catalog,
+- maintaining the global catalogue,
 - fixing data issues,
 - duplicate prevention.
 
@@ -100,9 +100,9 @@ Firebase stores:
 - legacy functionality.
 
 A lot of logic relies on:
-- realtime listeners,
+- real-time listeners,
 - implicit side effects,
-- automatic synchronization.
+- automatic synchronisation.
 
 ---
 
@@ -114,7 +114,7 @@ Responsibilities:
 - authentication,
 - team management,
 - product management,
-- inventory finalization,
+- inventory finalisation,
 - PDF / XLSX exports.
 
 Technically:
@@ -142,7 +142,7 @@ Offline-first is a **core feature** and must be preserved.
 Stack: MySQL
 
 Used for:
-- partial normalization,
+- partial normalisation,
 - global reference data.
 
 SQL is **not the source of truth**.
@@ -158,13 +158,13 @@ Each domain has its own specification in the [`DDD/`](./DDD) folder.
 
 | Domain               | Description                                                                 |
 | -------------------- | --------------------------------------------------------------------------- |
-| **Products**         | Global product catalog, local products, moderation, categories & attributes |
+| **Products**         | Global product catalogue, local products, moderation, categories & attributes |
 | **Inventory**        | Stock‑taking sessions, offline‑first, weight‑based counting, snapshots      |
 | **Recipes**          | Structured recipes, versioning, breakdown into product variants             |
 | **Users & Teams**    | Authentication, roles, memberships, invitations                             |
 | **Procurement**      | Supplier management, ordering, negotiation (revisions), email‑first         |
 | **Notifications**    | Push / email delivery, retry logic, token‑based actions for suppliers       |
-| **Platform (Internal)** | Moderation tools, global catalog management, internal roles (Diabolics)  |
+| **Platform (Internal)** | Moderation tools, global catalogue management, internal roles (Diabolics)  |
 
 **Key architectural document:** [`DDD/00_core_ownership.md`](./DDD/00_core_ownership.md)
 – defines the ownership & identity layer used by all domains.
