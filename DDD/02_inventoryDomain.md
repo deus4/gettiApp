@@ -2,7 +2,7 @@
 
 ## Purpose
 
-The Inventory Domain defines how stock‑taking (inventory counting) is performed, stored, finalized, aggregated, and exported.
+The Inventory Domain defines how stock‑taking (inventory counting) is performed, stored, finalised, aggregated, and exported.
 
 Its goals:
 - support fast and accurate inventory sessions
@@ -26,8 +26,8 @@ The Inventory Domain consists of:
 2. Inventory Ownership (operational scope)
 3. Inventory Item (with snapshot)
 4. Inventory Lifecycle & States
-5. Offline / Online behavior
-6. Finalization & Reports
+5. Offline / Online behaviour
+6. Finalisation & Reports
 7. POS integrations
 
 ---
@@ -103,7 +103,7 @@ An Inventory Item represents the counted result of a single Product Variant with
 - Has its own UUID (not a composite key)
 - May be counted by units or by weight
 - Contains a **snapshot of physical parameters** at the time of counting
-- Immutable after session finalization
+- Immutable after session finalisation
 
 ### Snapshot (stored directly in the item row)
 At each count, the following are frozen:
@@ -112,7 +112,7 @@ At each count, the following are frozen:
 - `snapshot_volume_ml` – volume
 
 These three numbers are stored in the `inventory_items` row itself, not in a separate table.  
-**Why:** If a moderator later changes the product in the global catalog (e.g., a new bottle weight), historical records are **not** recalculated. A report from January shows exactly the same numbers as when it was created.
+**Why:** If a moderator later changes the product in the global catalogue (e.g., a new bottle weight), historical records are **not** recalculated. A report from January shows exactly the same numbers as when it was created.
 
 ### Continuation (`is_continuation`)
 If a manager asks a bartender to continue a session after `Save & Send`, new items receive:
@@ -145,9 +145,9 @@ active → pending_finalization → finished
 ↘ cancelled
 
 
-- **`active`** – inventory in progress on iPad. Data stored locally on the device.
+- **`active`** – inventory in progress on iPad. Data is stored locally on the device.
 - **`pending_finalization`** – `Save & Send` has been sent, data received by the server, waiting for `Finish` in the web dashboard. This state may last indefinitely (conscious decision). A manager can return to the session, add items via web, or ask a staff member to continue on iPad.
-- **`finished`** – finalized via the `Finish` button in the web dashboard. All calculations frozen. Read‑only forever.
+- **`finished`** – finalised via the `Finish` button in the web dashboard. All calculations frozen. Read‑only forever.
 - **`cancelled`** – manually cancelled.
 
 ### Notifications for pending sessions
@@ -159,14 +159,14 @@ active → pending_finalization → finished
 
 ---
 
-## 5. Offline / Online Behavior
+## 5. Offline / Online Behaviour
 
 ### Offline‑first Principle
 Inventory collection must work **without an active internet connection**.
 
 ### Flow (AS‑IS on iPad)
-1. On first login – download product catalog (without images; images load online, placeholders when offline).
-2. During inventory – all data stored locally on iPad.
+1. On first login – download product catalogue (without images; images load online, placeholders when offline).
+2. During inventory, all data is stored locally on the iPad.
 3. On `Save & Send` – requires internet. The client sends the **entire session as an atomic document**, not incrementally.
 4. After initial review (by manager), the session may require corrections or additional items. In that case, the session is marked as needing revision. After changes, the user presses `Save & Send` again.
 5. If no internet – session stays local, UI shows offline status, user retries later.
@@ -181,7 +181,7 @@ Lazy‑loaded online. Offline → placeholder. Do not block inventory.
 
 ## 6. Finalization & Reports
 
-### Finalization (`Finish` in web dashboard)
+### Finalisation (`Finish` in web dashboard)
 When `Finish` is clicked:
 - timer stops
 - `finished_at` is recorded
@@ -213,7 +213,7 @@ No automatic scheduled exports – user initiates export manually.
 - Each system (CompuCash, Poster, Micros) has its own **Anti‑Corruption Layer (adapter)**.
 - Mapping `product_variant_id` ↔ external ID is stored in the adapter, not in the domain model.
 - The Inventory Session must already exist in the POS before pushing data (for CompuCash).
-- Units are normalized in the adapter.
+- Units are normalised in the adapter.
 - The Inventory Domain **does not own pricing**.
 
 ### Current status
@@ -221,7 +221,7 @@ No automatic scheduled exports – user initiates export manually.
 - Poster, Micros – future development.
 
 ### Future Extended Integrations (TO‑BE)
-- Creating new products in external systems (POS, ERP) based on validated catalog data.
+- Creating new products in external systems (POS, ERP) based on validated catalogue data.
 - Using the built‑in barcode scanner as a product data input source.
 - Syncing Product Labels and Variants to third‑party systems.
 
@@ -234,10 +234,10 @@ However, product data remains governed by the Products Domain and its moderation
 Access checks are in the **application layer (middleware)**, not in the domain.
 - JWT contains `user_id`.
 - Middleware reads `team_memberships` and verifies the user’s role for that Team.
-- Repositories receive `team_id` explicitly – they do not filter by user themselves.
+- Repositories receive `team_id` explicitly – they do not filter by the user themselves.
 
 A user may view an Inventory Session if:
-- they are a member of the Team that owns the session
+- They are a member of the Team that owns the session
 - their role has view permission (Owner, Manager, Inventory Manager)
 
 ---
