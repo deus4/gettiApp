@@ -1,8 +1,8 @@
-# Users, Teams & Organizations Domain — Domain Design Draft
+# Users, Teams & Organisations Domain — Domain Design Draft
 
 ## Purpose
 
-The Users, Teams & Organizations Domain defines:
+The Users, Teams & Organisations Domain defines:
 - who uses the system
 - how users are grouped
 - how responsibilities are distributed
@@ -15,7 +15,7 @@ Its goals:
 - provide a stable foundation for Inventory, Recipes, Products, and Analytics
 - remain flexible for future business models
 
-This domain is **structural and organizational**.  
+This domain is **structural and organisational**.  
 It does **not** implement inventory, recipe, or order business logic.
 
 ---
@@ -25,7 +25,7 @@ It does **not** implement inventory, recipe, or order business logic.
 The domain consists of:
 
 1. User  
-2. Organization  
+2. Organisation  
 3. Team  
 4. Membership & Roles  
 5. Location  
@@ -77,7 +77,7 @@ An Organization represents a legal or business entity that groups teams and loca
 **Examples:** restaurant group, hotel chain, enterprise customer, franchise owner.
 
 ### Bootstrap Rule
-When an Organization is created, the creating user is assigned the highest‑level role (`owner`) within that Organization.  
+When an Organization is created, the creating user is assigned the highest‑level role (`owner`) within that Organisation.  
 This rule exists solely to bootstrap the system and guarantee at least one administrator. It does **not** imply permanent ownership or fixed roles.
 
 ### Characteristics
@@ -93,7 +93,7 @@ This rule exists solely to bootstrap the system and guarantee at least one admin
 - `created_at`
 
 ### Current Implementation Note
-Organizations are **flat** – no parent/child hierarchies. Hierarchical organizations are a possible future extension.
+Organisations are **flat** – no parent/child hierarchies. Hierarchical organisations are a possible future extension.
 
 ---
 
@@ -101,13 +101,13 @@ Organizations are **flat** – no parent/child hierarchies. Hierarchical organiz
 
 ### Definition
 
-A Team is the **primary operational unit** within an Organization.  
+A Team is the **primary operational unit** within an Organisation.  
 It is the main working context for users.
 
 **Examples:** single bar, kitchen, brand‑specific unit, temporary event team.
 
 ### Characteristics
-- Belongs to exactly one Organization
+- Belongs to exactly one Organisation
 - Contains Users via Memberships
 - May own Locations
 - Is a valid ownership scope for Inventory and Recipes
@@ -258,7 +258,7 @@ Organization
 - **Inventory Domain** – owned by Team (direct `team_id`). Access via membership.
 - **Recipes Domain** – author = User, owner = Team/Organization (polymorphic).
 - **Products Domain** – global catalog shared; local products scoped to Team (`source = 'team'`).
-- **Procurement Domain** – orders and suppliers owned by Team/Organization.
+- **Procurement Domain** – orders and suppliers owned by Team/Organisation.
 - **Notifications Domain** – uses `user_sessions` to store device tokens for push.
 - **Platform Domain (Diabolics)** – completely isolated; separate `platform_users` table.
 
@@ -269,7 +269,7 @@ Organization
 > Users are actors, not owners.  
 > Ownership is explicit and immutable.  
 > Teams are the primary operational unit.  
-> Organizations enable scale and aggregation.  
+> Organisations enable scale and aggregation.  
 > Permissions are resolved in the application layer, not in the domain.  
 > Data outlives the user – removing a user does not delete their audit records.
 
