@@ -11,7 +11,7 @@ Its goals are:
 - provide a foundation for analytics, integrations, and future marketplaces
 
 The domain core is **category‑agnostic**.  
-Category‑specific behavior is implemented via attributes.
+Category‑specific behaviour is implemented via attributes.
 
 ---
 
@@ -61,7 +61,7 @@ A Product Label represents a commercial product as it exists on the market,
 - Not inventory‑countable.
 - Not associated with a barcode.
 
-A Product Label is what users **search for and recognize**.
+A Product Label is what users **search for and recognise**.
 
 ---
 
@@ -95,7 +95,7 @@ A Product Variant represents a concrete sellable unit that is actually counted d
 
 ### Source (origin)
 Every Variant has a `source` field:
-- `global` – from the moderated global catalog, available to all users.
+- `global` – from the moderated global catalogue, available to all users.
 - `team` – local variant created by a team; not moderated (or rejected). Visible only within that team’s scope.
 
 ---
@@ -117,13 +117,13 @@ A Category defines the type of product and the rules governing its attributes.
 
 The `Other` category is used for:
 - user‑local products
-- products not intended for the global catalog
+- products not intended for the global catalogue
 - products rejected by moderation (`ignore`)
 
 Products in the `Other` category:
 - are **not sent to moderation**
-- are visible only within their own team/organization
-- do **not** contribute to the growth of the global catalog
+- are visible only within their own team/organisation
+- do **not** contribute to the growth of the global catalogue
 - have `source = 'team'`
 
 ---
@@ -165,7 +165,7 @@ Attributes are typed and validated. They are **not free‑form user input**.
 
 ### General Principles
 
-Moderation is a cross‑cutting process that ensures the quality of the global product catalog.  
+Moderation is a cross‑cutting process that ensures the quality of the global product catalogue.  
 It is performed **only by internal Getti staff** (via Diabolics). External moderators never exist.
 
 ### Current Implementation (AS‑IS)
@@ -178,10 +178,10 @@ It is performed **only by internal Getti staff** (via Diabolics). External moder
   - **assign to** an existing product (by ID) – user’s product linked to existing one. User notified.
   - **ignore** – reject the product.
 
-### Behavior on `ignore`
+### Behaviour on `ignore`
 - The product remains local (`source = 'team'`).
-- Its category is automatically set to `Other` (unless the user already set a different category manually).
-- The product is excluded from the global catalog.
+- Its category is automatically set to `Other` (unless the user has already set a different category manually).
+- The product is excluded from the global catalogue.
 - User notified.
 
 ### Edit of a global product (`edit_product`)
@@ -207,7 +207,7 @@ In a future phase, prices may come from supplier price lists (Procurement domain
 ## 8. Relations to Other Domains
 
 - **Inventory Domain** – references only `product_variant_id`. Synchronous existence check (`is_active = TRUE`) is performed when creating inventory items.
-- **Recipes Domain** – uses Product Variants as ingredients. Same synchronous check.
+- **Recipes Domain** – uses Product Variants as ingredients - same synchronous check.
 - **Procurement Domain** – references Product Variants for order items.
 - **Users, Teams & Organizations** – ownership and visibility of local products (`source = 'team'`).
 - **Analytics Domain** (future) – aggregates by Product Label and Brand.
@@ -222,7 +222,7 @@ In a future phase, prices may come from supplier price lists (Procurement domain
 > Users search by Labels but may choose between Variants.  
 > Brands serve analytics and integrations.  
 > Moderation affects visibility, not history.  
-> Local products (`Other` category) never enter the global catalog.  
+> Local products (`Other` category) never enter the global catalogue.  
 > Synchronous existence check on reference; no eventual consistency at this layer.
 
 This separation is fundamental and **must not be violated** in UI, business logic, or integrations.
