@@ -16,9 +16,9 @@ Each process reflects how bars, restaurants, and enterprises actually work.
 
 **Process:**
 1. User registers.
-2. User creates an **Organization**.
+2. User creates an **Organisation**.
 3. System automatically:
-   - assigns the highest role (owner) to the creator within that Organization,
+   - assigns the highest role (owner) to the creator within that Organisation,
    - creates the first **Team**.
 4. User:
    - configures the Team,
@@ -33,7 +33,7 @@ Each process reflects how bars, restaurants, and enterprises actually work.
 **Business value:** Fast adoption, low cognitive load, no sales assistance needed.
 
 ### TO‑BE (near future)
-- Multiple Teams per Organization.
+- Multiple Teams per Organisation.
 - Cross‑team analytics.
 - Enterprise‑level permissions.
 
@@ -57,13 +57,13 @@ Each process reflects how bars, restaurants, and enterprises actually work.
 6. Moderator decisions:
    - **Accept** → product becomes global (`source = 'global'`). User notified.
    - **Assign to** existing product (by ID) → user’s product linked to existing one. User notified.
-   - **Ignore** → product remains local. Category is automatically set to `Other` (if the user did not already set it manually). User notified.
+   - **Ignore** → product remains local. The category is automatically set to `Other` (if the user did not already set it manually). User notified.
 
 **Business value:** Scalable product database, controlled data quality, foundation for analytics and integrations.
 
 ### TO‑BE (near future)
 - Producer / supplier portals.
-- Brand‑managed product catalogs.
+- Brand‑managed product catalogues.
 
 ---
 
@@ -135,7 +135,7 @@ Each process reflects how bars, restaurants, and enterprises actually work.
 3. Order sent via email.
 4. Supplier responds manually.
 
-**Limitations:** Not connected to inventory, no unified supplier state, manual reconciliation.
+**Limitations:** Not connected to inventory, no unified supplier state, and manual reconciliation.
 
 ### TO‑BE (planned, high priority)
 
@@ -144,11 +144,11 @@ Each process reflects how bars, restaurants, and enterprises actually work.
 **Process:**
 1. Inventory session finishes → system identifies low stock.
 2. User creates **Procurement Order** directly from inventory data (or manually).
-3. Order submitted → status `submitted`. Supplier receives email with a token‑based link to view/accept/reject.
+3. Order submitted → status `submitted`. Supplier receives an email with a token‑based link to view/accept/reject.
 4. Supplier may propose changes → a new **revision** is created. Order status → `in_negotiation`.
-5. User accepts or rejects revision.
+5. User accepts or rejects the revision.
 6. When agreed → status `agreed`.
-7. After physical delivery, user marks order `completed`.
+7. After physical delivery, the user marks the order `completed`.
 
 **Supplier lifecycle:**  
 `inactive` → `pending` (pairing request sent) → `accepted` / `rejected`.
@@ -234,7 +234,7 @@ The market is moving toward AI‑driven decision layers. In a narrow B2B vertica
 - A closed loop: Inventory → Order → Inventory.
 
 **Strategic direction (no near‑term commitment):**  
-We are designing the system to be **agent‑ready** without breaking current architecture:
+We are designing the system to be **agent‑ready** without breaking the current architecture:
 - Inventory and procurement APIs are explicit and idempotent.
 - Domain data is structured (not free text) – suitable for fine‑tuning or prompting.
 - Procurement revisions provide a clean supervised learning signal (what was proposed vs what was accepted).
