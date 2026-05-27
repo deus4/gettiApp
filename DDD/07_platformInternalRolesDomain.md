@@ -5,9 +5,9 @@
 The Platform Domain (historically and internally called **Diabolics**) describes the internal infrastructure available **exclusively to the Getti team**.
 
 Its goals:
-- manage the global product catalog
+- manage the global product catalogue
 - moderate user‑submitted content (products, attributes)
-- administer customers (Teams, Organizations, Users)
+- administer customers (Teams, Organisations, Users)
 - monitor system health and logs
 
 The Platform Domain is **completely isolated** from client‑facing parts of the system.  
@@ -25,7 +25,7 @@ External users, clients, and suppliers **never have access** to this domain.
 | Access          | Web / iPad                  | Internal web only                   |
 | Registration    | Self‑service + invitation   | Manual creation only                |
 
-- `platform_users` has **no foreign keys** to `organizations` or `teams` – intentional full isolation.
+- `platform_users` has **no foreign keys** to `organisations` or `teams` – intentional full isolation.
 - Platform JWT is not accepted by client APIs; client JWT is not accepted by Platform APIs.
 
 ---
@@ -64,9 +64,9 @@ Full access to everything:
 - notification templates (TO‑BE)
 
 ### `moderator`
-Work with the product catalog and moderation queue:
+Work with the product catalogue and moderation queue:
 - moderation queue (view, approve, assign, ignore)
-- edit global catalog (any product)
+- edit global catalogue (any product)
 - add products directly (bypassing queue)
 - upload and process images
 
@@ -74,7 +74,7 @@ Work with the product catalog and moderation queue:
 
 ### `support`
 Work with customers:
-- view Teams and Organizations (read‑only)
+- view Teams and Organisations (read‑only)
 - view Users
 - basic support operations
 
@@ -84,7 +84,7 @@ Work with customers:
 
 ## Functional Sections of Diabolics
 
-### SEARCH – Global Catalog
+### SEARCH – Global Catalogue
 
 Primary tool for working with the moderated product database.
 
@@ -110,7 +110,7 @@ Central tool for processing user‑submitted content.
 
 #### Request Card Contains
 - source Team, request type, date
-- product name as submitted by user
+- product name as submitted by the user
 - all attributes (origin, type, subtype, volume, alcohol %, full tare, empty tare, etc.)
 - for `edit_product`: original vs proposed changes (diff view)
 
@@ -119,7 +119,7 @@ Central tool for processing user‑submitted content.
 | Action         | Description                                                                          | User notification |
 |----------------|--------------------------------------------------------------------------------------|-------------------|
 | **Accept**     | Product becomes global (`source = 'global'`).                                        | Push              |
-| **Assign to**  | Link user’s product to an existing global product (by ID). Useful for duplicates.    | Push              |
+| **Assign to**  | Link the user’s product to an existing global product (by ID). Useful for duplicates.    | Push              |
 | **Ignore**     | Reject the request. Product remains local (`source = 'team'`, category `Other`).     | Push              |
 
 **Access:** `moderator`, `super_admin`
@@ -130,7 +130,7 @@ Central tool for processing user‑submitted content.
 
 Read‑only view of client structures.
 
-- list of Organizations and Teams
+- list of Organisations and Teams
 - view team members (Users)
 - basic support operations (e.g., resetting permissions)
 
@@ -162,9 +162,9 @@ Extended as the Procurement domain evolves.
 | Metric          | Description                                      |
 |-----------------|--------------------------------------------------|
 | UPLOAD IMAGES   | Number of uploaded product images               |
-| TYPES           | Categories present in the global catalog        |
+| TYPES           | Categories present in the global catalogue        |
 | MODERATE        | Products pending moderation                     |
-| TOTAL           | Total products in global catalog                |
+| TOTAL           | Total products in global catalogue                |
 
 **Access:** `moderator`, `super_admin`
 
@@ -211,7 +211,7 @@ This is a separate task and does not block the first release.
 
 ## Relations to Other Domains
 
-- **Products Domain** – moderation queue, global catalog editing.
+- **Products Domain** – moderation queue, global catalogue editing.
 - **Notifications Domain** – alerts for failed notifications.
 - **Users / Teams Domain** – read‑only view of client structures.
 - **Inventory Domain** – iPad logs.
