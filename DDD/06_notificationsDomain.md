@@ -129,7 +129,7 @@ Every notification attempt is recorded.
 ### Principle
 
 Suppliers never register in the system.  
-All interactions are via email containing read‑only HTML pages or simple action buttons.
+All interactions are via email, containing read‑only HTML pages or simple action buttons.
 
 ### Email Structure for Suppliers
 
@@ -155,7 +155,7 @@ Before sending any email to a supplier, the system checks the contact email for 
 If no‑reply detected:
 - email **is not sent**
 - user receives a warning (in‑app or email)
-- user is prompted to enter a different contact email
+- The user is prompted to enter a different contact email
 
 **This is a warning, not a hard error** – the user may override by providing a different address.
 
@@ -165,7 +165,7 @@ If no‑reply detected:
 
 All templates:
 - stored as separate files (HTML + plain text fallback)
-- support localization (EN by default)
+- support localisation (EN by default)
 - contain **no business logic**
 - managed via Diabolics (Platform Domain) – TO‑BE
 
