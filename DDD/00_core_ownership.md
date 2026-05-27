@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document describes the **target identity and ownership layer** for the entire system. In the current implementation (first release), some concepts may be simplified or deferred. The key difference: **Inventory Domain** uses a direct `team_id`, while Recipes and other domains with creator economy potential use polymorphic `owner_type + owner_id`.
+This document describes the **target identity and ownership layer** for the entire system. In the current implementation (first release), some concepts may be simplified or deferred. The key difference: **Inventory Domain** uses a direct `team_id`, whereas Recipes and other domains with creator-economy potential use a polymorphic `owner_type + owner_id`.
 
 ## Implementation by Domain (Current vs Future)
 
@@ -38,7 +38,7 @@ It defines *who exists* and *who owns what*.
 ## Core Entities Overview
 
 1. User
-2. Organization
+2. Organisation
 3. Team
 4. Membership
 5. Location
@@ -60,7 +60,7 @@ A User **is never the direct owner of operational data**.
 ### Responsibilities
 
 - acting (who performed the action)
-- authentication / authorization (outside domains)
+- authentication/authorisation (outside domains)
 - auditing (`created_by`, `updated_by`)
 
 ### Invariants
@@ -108,7 +108,7 @@ This is a temporary initialisation rule.
 
 ### Invariants
 
-- Organization‑level ownership is immutable
+- Organisation-level ownership is immutable
 - An Organization may exist without active Users
 
 ### Conceptual Fields
@@ -132,7 +132,7 @@ happen **in the context of a Team**.
 
 ### Characteristics
 
-- belongs to exactly one Organization
+- belongs to exactly one Organisation
 - contains Users via Membership
 - may own Locations
 - can be the owner of domain entities
