@@ -10,7 +10,7 @@ Its goals:
 - preserve historical correctness
 - allow reuse across teams and locations
 
-This domain intentionally avoids business models and monetization.  
+This domain intentionally avoids business models and monetisation.  
 It focuses on **structure, correctness, and extensibility**.
 
 **Current status:** Recipes are **not yet used in inventory** due to legacy limitations. The design below describes the **target state (TO‑BE)** that will be implemented in Phase 2 of the roadmap.
@@ -42,7 +42,7 @@ It is an abstract entity that may evolve over time (via versions).
 ### Characteristics
 - Has an **author** (User) – who created it (immutable).
 - Belongs to an **ownership scope** – who may use it operationally.
-- Has a **rights holder** (User, nullable) – who receives royalties in future creator economy.
+- Has a **rights holder** (User, nullable) – who receives royalties in the future creator economy.
 - Has multiple **versions**.
 - Is **not directly inventory‑countable** – inventory works with Recipe Versions.
 
@@ -52,7 +52,7 @@ It is an abstract entity that may evolve over time (via versions).
 - `author_user_id` (immutable)
 - `owner_type` (user | team | organization)
 - `owner_id`
-- `rights_holder_user_id` (nullable, for future monetization)
+- `rights_holder_user_id` (nullable, for future monetisation)
 - `is_archived` (boolean)
 - `created_at`
 
@@ -108,7 +108,7 @@ No eventual consistency at this layer.
 
 ### Rules
 - No free‑text ingredients – only Product Variants.
-- Units must be normalized (e.g., always ml for liquids, g for weight, pcs for pieces).
+- Units must be normalised (e.g., always ml for liquids, g for weight, pcs for pieces).
 
 ---
 
@@ -123,13 +123,13 @@ Three independent roles are clearly separated:
 | **Rights Holder** | Who receives royalties in future creator economy | ✅ Yes | Future monetization |
 
 **Current phase:**  
-- Author is always a User within an Organization.  
-- Owner is typically a Team or Organization.  
+- The author is always a User within an Organisation.  
+- Owner is typically a Team or Organisation.  
 - Rights holder may be `NULL` (not used yet).
 
-**Supported ownership scopes:** User, Team, Organization.
+**Supported ownership scopes:** User, Team, Organisation.
 
-**Visibility:** Recipes are private by default. Visibility is limited to the ownership scope. No public catalog in the current phase.
+**Visibility:** Recipes are private by default. Visibility is limited to the ownership scope. No public catalogue in the current phase.
 
 ---
 
@@ -160,7 +160,7 @@ This section describes the **target behaviour** to be implemented in Phase 2 of 
 ### Flow
 1. User starts an Inventory Session.
 2. User selects a Recipe (e.g., “Negroni Pre‑Batch”) and enters the **total volume** (or total units) counted.
-3. The system takes the **latest active Recipe Version** (or a specific version if user chooses).
+3. The system takes the **latest active Recipe Version** (or a specific version if the user chooses).
 4. System breaks down the total volume into ingredient quantities using **linear scaling** (for volumetric ingredients) and simple integer rounding for piece‑based ingredients (e.g., eggs, limes).
 5. For each ingredient, an **Inventory Item** is created, with:
    - `product_variant_id`
@@ -202,7 +202,7 @@ This guarantees auditability and correct historical reporting even if recipes or
 The following are **explicitly not part of this domain** and will be implemented as separate bounded contexts later:
 
 - Public recipe discovery
-- Recipe licensing and monetization
+- Recipe licensing and monetisation
 - NFT‑backed recipe ownership
 - Royalty payments
 
@@ -217,7 +217,7 @@ The current design reserves the `rights_holder_user_id` field and the Recipe Tra
 > History is immutable – old sessions never change.  
 > Ownership, author, and rights holder are separate.  
 > Ownership changes are logged (Recipe Transfer).  
-> Monetization must not break operational correctness.  
+> Monetisation must not break operational correctness.  
 > Synchronous validation of Product Variants; no eventual consistency at this layer.
 
 This domain is designed to remain stable, auditable, and production‑safe regardless of future business models.
